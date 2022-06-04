@@ -1,0 +1,4 @@
+guardar só quando deslocamento for considerável
+Login usuario-admin
+mostrar deslocamento histórico de alguma forma
+envio em lote de tempo X em tempo X

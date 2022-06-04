@@ -1,4 +1,4 @@
-package com.example.telemetriaapp;
+package br.edu.uniritter.gps.gps;
 
 import org.junit.Test;
 
