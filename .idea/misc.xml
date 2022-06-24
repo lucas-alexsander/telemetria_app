@@ -3,14 +3,17 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/lucas/AndroidStudioProjects/mobilefapa_20221_gps/app/src/main/res/layout/activity_land.xml" value="0.19067028985507245" />
         <entry key="..\:/Users/lucas/AndroidStudioProjects/mobilefapa_20221_gps/app/src/main/res/layout/activity_login.xml" value="0.33" />
-        <entry key="..\:/Users/lucas/AndroidStudioProjects/mobilefapa_20221_gps/app/src/main/res/layout/activity_main.xml" value="0.25" />
-        <entry key="..\:/Users/lucas/AndroidStudioProjects/mobilefapa_20221_gps/app/src/main/res/layout/gps_activity.xml" value="0.19067028985507245" />
+        <entry key="..\:/Users/lucas/AndroidStudioProjects/mobilefapa_20221_gps/app/src/main/res/layout/activity_main.xml" value="0.33" />
+        <entry key="..\:/Users/lucas/AndroidStudioProjects/mobilefapa_20221_gps/app/src/main/res/layout/activity_main_admin.xml" value="0.33" />
+        <entry key="..\:/Users/lucas/AndroidStudioProjects/mobilefapa_20221_gps/app/src/main/res/layout/gps_activity.xml" value="0.13125" />
         <entry key="..\:/projetosAndroid/BuscaSensores/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1" />
         <entry key="..\:/projetosAndroid/BuscaSensores/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
         <entry key="..\:/projetosAndroid/BuscaSensores/app/src/main/res/layout/activity_main.xml" value="0.2" />
+        <entry key="..\:/projetosAndroid/BuscaSensores/app/src/main/res/layout/activity_map.xml" value="0.23541666666666666" />
+        <entry key="..\:/projetosAndroid/BuscaSensores/app/src/main/res/layout/activity_map1.xml" value="0.19895833333333332" />
         <entry key="..\:/projetosAndroid/BuscaSensores/app/src/main/res/layout/gps_activity.xml" value="0.1" />
+        <entry key="..\:/projetosAndroid/BuscaSensores/app/src/main/res/layout/layout_posicao.xml" value="0.2" />
       </map>
     </option>
   </component>

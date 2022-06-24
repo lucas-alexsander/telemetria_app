@@ -6,9 +6,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -17,11 +22,22 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 
+import java.util.List;
+
 import br.edu.uniritter.atsd.gps.R;
+import br.edu.uniritter.gps.adapter.PosicaoAdapter;
+import br.edu.uniritter.gps.repositorios.PosicaoRepository;
+import br.edu.uniritter.gps.servicosApp.PosicaoDBServices;
+import br.edu.uniritter.gps.servicosApp.PosicaoServices;
+import br.edu.uniritter.gps.viewmodel.PosicaoViewModel;
 
 public class GPSActivity extends AppCompatActivity {
     public static final String TAG = "GPSActivity";
     //private FusedLocationProviderClient fusedLocationClient;
+
+    private int intervaloLocation;
+    //0 == a pé | 1 == veículo
+    private int modoDeslocamento;
 
 
     @RequiresApi(api = Build.VERSION_CODES.R)
@@ -29,7 +45,7 @@ public class GPSActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gps_activity);
-
+        carregaPreferencias();
         // é necessário solicitar permissão de acesso e
         // informar no manifest o uso das permissões
 
@@ -57,8 +73,9 @@ public class GPSActivity extends AppCompatActivity {
                 Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.ACCESS_COARSE_LOCATION
         });
-    }
 
+        setarRecyclerViewGPS();
+    }
 
     private void localizar() {
 
@@ -74,7 +91,7 @@ public class GPSActivity extends AppCompatActivity {
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 3, new LocationListener() {
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, intervaloLocation*1000, 3, new LocationListener() {
             @Override
             public void onLocationChanged(@NonNull Location location) {
                 Log.d(TAG, "onLocationChanged: " + location);
@@ -114,4 +131,40 @@ public class GPSActivity extends AppCompatActivity {
                  */
 
      }
+
+    private void carregaPreferencias() {
+        //Carrega-los em variaveis/constantes
+        //que serão usadas pelo app
+        SharedPreferences preferences = getPreferences(MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+
+        if(preferences.contains("intervalo_location")){
+            intervaloLocation = preferences.getInt("intervalo_location",5);
+        }
+
+        if(preferences.contains("modo_deslocamento")){
+            modoDeslocamento = preferences.getInt("modo_deslocamento",0);
+        }
+
+        editor.commit();
+    }
+
+    private void setarRecyclerViewGPS() {
+        RecyclerView recyclerView =  findViewById(R.id.rvRegistros);
+        PosicaoAdapter adapter =  new PosicaoAdapter();
+        recyclerView.setLayoutManager( new LinearLayoutManager(this));
+        recyclerView.setAdapter(adapter);
+        List<PosicaoDBServices.Localizacao> localizacoes = PosicaoServices.getInstance(this.getApplicationContext()).getAllLocalizacao();
+
+        PosicaoViewModel viewmodel = new ViewModelProvider(this).get(PosicaoViewModel.class);
+        PosicaoRepository.getInstance(this.getApplicationContext()).getPosicoes().observe(this,
+                new Observer<List<Location>>() {
+                    @Override
+                    public void onChanged(List<Location> locations) {
+                        adapter.refresh();
+                    }
+                }
+        );
+    }
+
 }
